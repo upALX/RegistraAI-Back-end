@@ -1,0 +1,29 @@
+version: '3'
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      - postgres
+    environment:
+      DB_CONNECTION: pgsql
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_DATABASE: registraaidb
+      DB_USERNAME: alx
+      DB_PASSWORD: 9871237645
+
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: registraaidb
+      POSTGRES_USER: alx
+      POSTGRES_PASSWORD: 9871237645
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
