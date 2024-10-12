@@ -1,11 +1,13 @@
-version: '3'
+version: "3"
 services:
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "8000:8000"
     volumes:
-      - .:/app
+      - ./:/app
     depends_on:
       - postgres
     environment:
@@ -15,6 +17,27 @@ services:
       DB_DATABASE: registraaidb
       DB_USERNAME: alx
       DB_PASSWORD: 9871237645
+      RUN_MIGRATIONS: "true"
+      APP_ENV: "app"
+    entrypoint: ["sh", "entrypoint.sh"]
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: php artisan queue:work
+    depends_on:
+      - app
+    volumes:
+      - ./:/app
+    environment:
+      DB_CONNECTION: pgsql
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_DATABASE: registraaidb
+      DB_USERNAME: alx
+      DB_PASSWORD: 9871237645
+      APP_ENV: "worker"
 
   postgres:
     image: postgres:13

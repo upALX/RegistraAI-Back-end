@@ -13,6 +13,6 @@
 |
 */
 
-$router->get('/', function () use ($router) {
+$router->get('/graphql', function () use ($router) {
     return $router->app->version();
 });

@@ -13,6 +13,8 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 RUN composer install
 
+RUN chmod +x entrypoint.sh
+
 EXPOSE 8000
 
-CMD php -S 0.0.0.0:8000 -t public
+ENTRYPOINT ["entrypoint.sh"]
