@@ -2,38 +2,21 @@
 
 namespace App\Providers;
 
-use App\Models\User;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
+use GraphQL\Type\Schema;
+use GraphQL\Type\Definition\Type;
+use App\GraphQL\Queries\UserQuery;
+use App\GraphQL\Mutations\AuthMutations;
 
-class AuthServiceProvider extends ServiceProvider
+class GraphQLServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        //
-    }
-
-    /**
-     * Boot the authentication services for the application.
-     *
-     * @return void
-     */
     public function boot()
     {
-        // Here you may define how you wish users to be authenticated for your Lumen
-        // application. The callback which receives the incoming request instance
-        // should return either a User instance or null. You're free to obtain
-        // the User instance via an API token or any other method necessary.
+        $schema = new Schema([
+            'query' => new UserQuery(),
+            'mutation' => new AuthMutations(),
+        ]);
 
-        $this->app['auth']->viaRequest('api', function ($request) {
-            if ($request->input('api_token')) {
-                return User::where('api_token', $request->input('api_token'))->first();
-            }
-        });
+        $this->app->instance('graphql.schema', $schema);
     }
 }
