@@ -11,14 +11,14 @@ services:
     depends_on:
       - postgres
     environment:
-      DB_CONNECTION: pgsql
-      DB_HOST: postgres
+      DB_CONNECTION: ${DB_CONNECTION}
+      DB_HOST: ${DB_HOST}
       DB_PORT: 5432
-      DB_DATABASE: registraaidb
-      DB_USERNAME: alx
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: 9871237645
       RUN_MIGRATIONS: "true"
-      APP_ENV: "app"
+      APP_ENV: "local"
     entrypoint: ["sh", "entrypoint.sh"]
 
   worker:
@@ -31,19 +31,19 @@ services:
     volumes:
       - ./:/app
     environment:
-      DB_CONNECTION: pgsql
-      DB_HOST: postgres
+      DB_CONNECTION: ${DB_CONNECTION}
+      DB_HOST: ${DB_HOST}
       DB_PORT: 5432
-      DB_DATABASE: registraaidb
-      DB_USERNAME: alx
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: 9871237645
-      APP_ENV: "worker"
+      APP_ENV: "local"
 
   postgres:
     image: postgres:13
     environment:
-      POSTGRES_DB: registraaidb
-      POSTGRES_USER: alx
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: 9871237645
     volumes:
       - pgdata:/var/lib/postgresql/data
