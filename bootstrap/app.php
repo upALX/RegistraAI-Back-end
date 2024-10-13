@@ -23,6 +23,10 @@ $app = new Laravel\Lumen\Application(
     dirname(__DIR__)
 );
 
+$app->routeMiddleware([
+    'session' => App\Http\Middleware\SessionMiddleware::class,
+]);
+
 $app->register(Illuminate\Session\SessionServiceProvider::class);
 
 

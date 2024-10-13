@@ -2,32 +2,44 @@
 
 namespace App\Models;
 
-use Illuminate\Auth\Authenticatable;
-use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Laravel\Lumen\Auth\Authorizable;
+use Illuminate\Support\Facades\Hash;
 
-class User extends Model implements AuthenticatableContract, AuthorizableContract
+class User extends Model
 {
-    use Authenticatable, Authorizable, HasFactory;
+    protected $fillable = ['email', 'password'];
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var string[]
-     */
-    protected $fillable = [
-        'name', 'email',
-    ];
+    public function saveToFile($data)
+    {
+        $filePath = storage_path('users.json');
 
-    /**
-     * The attributes excluded from the model's JSON form.
-     *
-     * @var string[]
-     */
-    protected $hidden = [
-        'password',
-    ];
+        if (file_exists($filePath)) {
+            $currentData = json_decode(file_get_contents($filePath), true);
+        } else {
+            $currentData = [];
+        }
+
+        $currentData[] = [
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']), 
+        ];
+
+        file_put_contents($filePath, json_encode($currentData, JSON_PRETTY_PRINT));
+    }
+
+    public static function userExists($email)
+    {
+        $filePath = storage_path('users.json');
+
+        if (file_exists($filePath)) {
+            $currentData = json_decode(file_get_contents($filePath), true);
+            foreach ($currentData as $user) {
+                if ($user['email'] === $email) {
+                    return true; 
+                }
+            }
+        }
+
+        return false; 
+    }
 }
