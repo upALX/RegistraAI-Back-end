@@ -23,6 +23,9 @@ $app = new Laravel\Lumen\Application(
     dirname(__DIR__)
 );
 
+$app->register(Illuminate\Session\SessionServiceProvider::class);
+
+
 // $app->withFacades();
 
 // $app->withEloquent();
