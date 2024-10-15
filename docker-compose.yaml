@@ -19,6 +19,8 @@ services:
       DB_PASSWORD: 9871237645
       RUN_MIGRATIONS: "true"
       APP_ENV: "local"
+      APP_DEBUG: "true"
+      LOG_CHANNEL: "stderr"
     entrypoint: ["sh", "entrypoint.sh"]
 
   worker:

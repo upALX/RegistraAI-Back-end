@@ -1,0 +1,24 @@
+type Query {
+    _empty: String
+}
+
+type Mutation {
+    register(name: String!, email: String!, password: String!): UserResponse
+        @field(resolver: "App\\GraphQL\\Mutations\\CreateUserMutation")
+    login(email: String!, password: String!): UserResponse
+        @field(resolver: "App\\GraphQL\\Mutations\\AuthLoginMutation")
+    logout: Boolean
+        @field(resolver: "App\\GraphQL\\Mutations\\AuthLogoutMutation")
+}
+
+type UserResponse {
+    success: Boolean!
+    message: String!
+    user: User
+}
+
+type User {
+    id: ID!
+    name: String!
+    email: String!
+}

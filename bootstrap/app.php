@@ -8,60 +8,38 @@ require_once __DIR__.'/../vendor/autoload.php';
 
 date_default_timezone_set(env('APP_TIMEZONE', 'UTC'));
 
+$app = new Laravel\Lumen\Application(dirname(__DIR__));
 
-$app = new Laravel\Lumen\Application(
-    dirname(__DIR__)
-);
+$app->register(Illuminate\Auth\AuthServiceProvider::class);
+$app->register(Nuwave\Lighthouse\LighthouseServiceProvider::class);
+$app->register(Illuminate\Session\SessionServiceProvider::class);
+$app->register(Illuminate\Cookie\CookieServiceProvider::class);
 
-$app->singleton(Illuminate\Session\SessionManager::class, function ($app) {
-    return $app->loadComponent('session', Illuminate\Session\SessionServiceProvider::class, 'session');
-});
-
-$app->middleware([
-    Illuminate\Session\Middleware\StartSession::class,
-]);
-
+$app->configure('logging'); 
+$app->configure('lighthouse');
+$app->configure('auth');
 $app->configure('session');
 
-$app->register(Illuminate\Session\SessionServiceProvider::class);
+class_alias(Illuminate\Support\Facades\Cookie::class, 'Cookie');
 
-
+$app->middleware([
+    // Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+    Illuminate\Session\Middleware\StartSession::class,
+    Nuwave\Lighthouse\Http\Middleware\AcceptJson::class,
+    Nuwave\Lighthouse\Http\Middleware\AttemptAuthentication::class,
+]);
 
 $app->withFacades();
-
-// $app->withEloquent();
-
+$app->withEloquent();
 
 $app->singleton(
     Illuminate\Contracts\Debug\ExceptionHandler::class,
     App\Exceptions\Handler::class
 );
-
 $app->singleton(
     Illuminate\Contracts\Console\Kernel::class,
     App\Console\Kernel::class
 );
-
-
-
-$app->configure('app');
-
-
-
-// $app->middleware([
-//     App\Http\Middleware\ExampleMiddleware::class
-// ]);
-
-// $app->routeMiddleware([
-//     'auth' => App\Http\Middleware\Authenticate::class,
-// ]);
-
-
-// $app->register(App\Providers\AppServiceProvider::class);
-// $app->register(App\Providers\AuthServiceProvider::class);
-// $app->register(App\Providers\EventServiceProvider::class);
-
-
 
 $app->router->group([
     'namespace' => 'App\Http\Controllers',
