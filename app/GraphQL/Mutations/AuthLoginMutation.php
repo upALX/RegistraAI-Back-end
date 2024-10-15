@@ -10,7 +10,15 @@ class AuthLoginMutation
 {
     public function __invoke($_, array $args, $context)
     {
-        
+        if (Auth::user()) {
+            print_r('entrou');
+            return [
+                'success' => true,
+                'message' => 'User already authenticated',
+                'user' => Auth::user(),
+            ];
+        }
+
         $user = User::where('email', $args['email'])->first();
 
         if (!$user || !Hash::check($args['password'], $user->password)) {
