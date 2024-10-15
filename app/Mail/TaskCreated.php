@@ -20,7 +20,7 @@ class TaskCreated extends Mailable
 
     public function build()
     {
-        return $this->view('emails.task_created') // A view que você criará
+        return $this->view('emails.task_created') 
             ->with(['task' => $this->task]);
     }
 }
