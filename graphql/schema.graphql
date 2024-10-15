@@ -9,6 +9,8 @@ type Mutation {
         @field(resolver: "App\\GraphQL\\Mutations\\AuthLoginMutation")
     logout: Boolean
         @field(resolver: "App\\GraphQL\\Mutations\\AuthLogoutMutation")
+    createTask(title: String!, description: String!): TaskResponse
+        @field(resolver: "App\\GraphQL\\Mutations\\CreateTaskMutation")
 }
 
 type UserResponse {
@@ -17,8 +19,21 @@ type UserResponse {
     user: User
 }
 
+type TaskResponse {
+    success: Boolean!
+    message: String!
+    task: Task
+}
+
 type User {
     id: ID!
     name: String!
     email: String!
+}
+
+type Task {
+    id: ID!
+    title: String!
+    description: String!
+    user_id: ID!
 }
