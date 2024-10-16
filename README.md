@@ -2,7 +2,7 @@
 
 **Overview**
 
-This is server side of RegistraAI app.
+This is the server side of Registra AÍ app.
 
 🛠️*This project is under development*🛠️
 
@@ -21,25 +21,22 @@ This is server side of RegistraAI app.
 ## How to use 🫁
 
 **requirements:**
-  - docker >= 20
-  - php >= 8
-  - Lumen >= 5.2.0
-  - Graphql >= 16.9.0
-  - Lighthouse >= 1.2.2
+  - docker >= 27.3.1
+  - docker compose >= 1.29.2
 
 **1 - Clone this repo:**
 ```
 git clone git@github.com:upALX/RegistraAI-Back-end.git
 ```
-**2 - install all dependencies**
+**2 - Build the aplication and run (first time)**
+```
+docker-coompose up --build
 ```
 
-```
-
-**3 - Run the app:** 
+**3 - Disclaimer: if you need only run:** 
 
 ```
-
+docker-compose up
 ```
 
 ## Make your mark :triangular_flag_on_post:   
