@@ -10,7 +10,7 @@ class Task extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'task';
+    protected $table = 'tasks';
     protected $keyType = 'string';
     public $incrementing = false;
     public $timestamps = true;

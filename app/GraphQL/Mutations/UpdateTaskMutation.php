@@ -3,14 +3,23 @@
 namespace App\GraphQL\Mutations;
 
 use App\Models\Task;
+use Illuminate\Support\Str;
 
 class UpdateTaskMutation
 {
     public function __invoke($_, array $args)
     {
+        if (!Str::isUuid($args['id'])) {
+            return [
+                'success' => false,
+                'message' => 'ID must be a valid UUID.',
+                'task' => null,
+            ];
+        }
+
         $task = Task::find($args['id']);
 
-        if ($task) {
+        if (!$task) {
             return [
                 'success' => false,
                 'message' => 'Task not found.',

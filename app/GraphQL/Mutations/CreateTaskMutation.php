@@ -10,12 +10,12 @@ class CreateTaskMutation
     {
         // Verifica se o usuário está autenticado
         $user = Auth::user();
-        if (!$user) {
-            return [
-                'success' => false,
-                'message' => 'User must be authenticated to create a task.',
-            ];
-        }
+        // if (!$user) {
+        //     return [
+        //         'success' => false,
+        //         'message' => 'User must be authenticated to create a task.',
+        //     ];
+        // }
 
         // Cria a tarefa
         $task = Task::create([
