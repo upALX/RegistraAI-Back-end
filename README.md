@@ -20,9 +20,31 @@ This is the server side of Registra AÍ app.
 
 ## How to use 🫁
 
-**requirements:**
+**All of you need:**
   - docker >= 27.3.1
   - docker compose >= 1.29.2
+
+**You need create and put this env vars on root folder of the app**
+```
+DB_CONNECTION=pgsql
+DB_HOST=postgres
+DB_PORT=5432
+DB_DATABASE=registraaidb
+DB_USERNAME=alx
+DB_PASSWORD=9871237645
+APP_ENV=local
+SESSION_DRIVER=file
+SESSION_LIFETIME=120
+APP_DEBUG=true
+MAIL_MAILER=mailtrap
+MAIL_HOST=sandbox.api.mailtrap.io
+MAILTRAP_API_KEY=79e2d42d4a17537afe3b854461083462
+MAILTRAP_INBOX_ID=3128841
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=hello@example.com
+MAIL_FROM_NAME=registraai
+SESSION_DOMAIN=localhost
+```
 
 **1 - Clone this repo:**
 ```
@@ -33,7 +55,7 @@ git clone git@github.com:upALX/RegistraAI-Back-end.git
 docker-coompose up --build
 ```
 
-**3 - Disclaimer: if you need only run:** 
+**If you stop the app and need to run again, use this:** 
 
 ```
 docker-compose up
