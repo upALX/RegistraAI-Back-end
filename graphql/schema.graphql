@@ -11,9 +11,6 @@ type Mutation {
         @field(resolver: "App\\GraphQL\\Mutations\\AuthLogoutMutation")
     createTask(title: String!, description: String!): TaskResponse
         @field(resolver: "App\\GraphQL\\Mutations\\CreateTaskMutation")
-}
-
-type Mutation {
     updateTask(
         id: ID!
         title: String
