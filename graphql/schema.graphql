@@ -13,6 +13,16 @@ type Mutation {
         @field(resolver: "App\\GraphQL\\Mutations\\CreateTaskMutation")
 }
 
+type Mutation {
+    updateTask(
+        id: ID!
+        title: String
+        description: String
+        status: String
+    ): TaskResponse
+        @field(resolver: "App\\GraphQL\\Mutations\\UpdateTaskMutation")
+}
+
 type UserResponse {
     success: Boolean!
     message: String!
@@ -35,5 +45,7 @@ type Task {
     id: ID!
     title: String!
     description: String!
+    status: String!
     user_id: ID!
+    user: User!
 }
